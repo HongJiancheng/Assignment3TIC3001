@@ -1,6 +1,7 @@
 package kwicPipe.tojava;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Commands {
     private Boolean isExit=false;
@@ -39,20 +40,44 @@ public class Commands {
                             "** To exit, please use \"exit\" command.                                             **\n" +
                             "*************************************************************************************");
                 }  catch (FileNotFoundException e) {
-                    ui.printError("Have problem in reading file, please try again!");
+                    ui.printError("Have problem in reading file(s), please try again!");
                 }
                 ui.inputIndicator("Command: ");
                 break;
             case "search":
-                ui.inputIndicator("Search Word: ");
-                search=new Search(ui.readUserCommand());
-                if(readyToRun){
-                    ui.showToUser("### Circular shift for search has been started!");
-                    search.runSearch(in, ui, pipeline,ignore,require);
-                }else{
-                    ui.printError("Input is not ready to run circular shift, please try again!");
+                pipeline.resetSearchResult();
+                ui.inputIndicator("Search File List Path: ");
+                //search=new Search(ui.readUserCommand());
+                ui.setSearchListPath(pipeline,ui.readUserCommand());
+                try {
+                    search = new Search(pipeline);
+                } catch (FileNotFoundException e){
+                    ui.printError("Have problem in reading file(s), please try again!");
                 }
-                ui.inputIndicator("Command: ");
+                ui.showToUser(
+                        "*******************************************\n" +
+                        "** Please input search Term.             **\n" +
+                        "** To exit, please input \"q\"!            **\n" +
+                        "*******************************************");
+                ui.inputIndicator("Search term: ");
+                String toSearch;
+                do{
+                    toSearch=ui.readUserCommand();
+                    search.searchTerm(toSearch);
+                    readyToRun=true;
+                    if(readyToRun){
+                        ui.showToUser("### Circular shift for search has been started!");
+                        try {
+                            search.runSearch(in, ui, pipeline, ignore, require);
+                        } catch (IOException e){
+                            ui.printError("Have problem in writing file(s), please try again!");
+                        }
+                    }else{
+                        ui.printError("Input is not ready to run circular shift, please try again!");
+                    }
+                    ui.inputIndicator("Search term: ");
+                }while(toSearch.compareTo("q")!=0);
+                isExit=true;
                 break;
             case "run":
                 if(readyToRun){

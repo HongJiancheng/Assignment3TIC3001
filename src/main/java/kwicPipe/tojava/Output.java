@@ -25,7 +25,7 @@ public class Output {
     }
     public void out(Ui ui, Pipeline pipeline){
         if(outputPath==null){
-            outputPath="C:\\OutputFile.txt";
+            outputPath="TIC3001-Assignment3-testcases/Default/OutputFile.txt";
         }
         printFile(ui,pipeline);
     }

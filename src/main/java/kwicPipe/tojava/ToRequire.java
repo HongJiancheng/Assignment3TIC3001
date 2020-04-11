@@ -13,8 +13,11 @@ public class ToRequire {
         String thisLine;
         while(s.hasNext()) {
             thisLine=s.nextLine();
-            if(!thisLine.isEmpty()){
-                in.addRequiredLine(thisLine.trim());
+            String [] array = thisLine.trim().split(" ");
+            if(!thisLine.isEmpty() ){
+                if(array.length==1){
+                    in.addRequiredLine(thisLine.trim());
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Input {
 //    private static Vector<String> lines=new Vector();
     private CircularShift shift;
+    public Input(){}
     public Input(Pipeline in) throws FileNotFoundException{
         getLine(in);
     }

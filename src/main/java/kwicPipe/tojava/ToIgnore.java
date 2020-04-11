@@ -13,8 +13,11 @@ public class ToIgnore {
         String thisLine;
         while(s.hasNext()) {
             thisLine=s.nextLine();
-            if(!thisLine.isEmpty()){
-                in.addIgnoreLine(thisLine.trim());
+            String [] array = thisLine.trim().split(" ");
+            if(!thisLine.isEmpty() ){
+                if(array.length==1){
+                    in.addIgnoreLine(thisLine.trim());
+                }
             }
         }
     }

@@ -42,12 +42,26 @@ public class Ui {
         showToUser("### Input Path has been set as: "+newPath);
     }
     public void setIgnorePath(Pipeline pipeline, String newPath){
-        pipeline.setIgnoreListPath(newPath);
-        showToUser("### Ignore List Path has been set as: "+newPath);
+        if(newPath.isEmpty()){
+            pipeline.setIgnoreListPath("TIC3001-Assignment3-testcases/Default/ToIgnore.txt");
+            showToUser("### Ignore List Path has been set as default: " + newPath);
+        }else{
+            pipeline.setIgnoreListPath(newPath);
+            showToUser("### Ignore List Path has been set as : "+newPath);
+        }
     }
     public void setRequiredPath(Pipeline pipeline, String newPath){
-        pipeline.setRequiredListPath(newPath);
-        showToUser("### Required List Path has been set as: "+newPath);
+        if(newPath.isEmpty()){
+            pipeline.setRequiredListPath("TIC3001-Assignment3-testcases/Default/ToRequire.txt");
+            showToUser("### Required List Path has been set as default: " + newPath);
+        }else {
+            pipeline.setRequiredListPath(newPath);
+            showToUser("### Required List Path has been set as: " + newPath);
+        }
+    }
+    public void setSearchListPath(Pipeline pipeline, String newPath){
+        pipeline.setSearchListPath(newPath);
+        showToUser("### Search List Path has been set as: " + newPath);
     }
     public void setOutputPath(Pipeline pipeline, String newPath){
         File tempDir = new File(newPath.substring(0,newPath.lastIndexOf("\\")));
